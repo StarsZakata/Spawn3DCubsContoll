@@ -2,30 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private Transform shootPoint; //точка создани€ 
-    [SerializeField] private Bullet bullettemplate; //шаблон
-   
-    [SerializeField] private float delayBetweenShoots; //врем€ между выстрелами
-    private float timeAfterShoot; //счетчик дл€ отслеживани€ частоты выстрелов
+	[Space(10)]
+	[Range(1, 10)]
+	[SerializeField] private float delayBetweenShoots;
+	[Range(2, 10)]
+	[SerializeField] private float speed;
+	[Range(5, 25)]
+	[SerializeField] private float distance;
 
+	private float timeAfterShoot;
+	private ShotPoint _shotPoint;
+
+	private void Start()
+    {
+		_shotPoint = GetComponentInChildren<ShotPoint>();
+	}
     private void Update()
-    {
-        timeAfterShoot += Time.deltaTime; //увеличени€ счетчика 
-        if (timeAfterShoot > delayBetweenShoots)
-         {
-            Shoot();
-            timeAfterShoot = 0;
-        }     
-    }
-    //—оздани€ объектаѕули
-    private void Shoot()
-    {
-        Instantiate(bullettemplate, shootPoint.position, Quaternion.identity);
-
-    }
-
-
+	{
+		timeAfterShoot += Time.deltaTime; //увеличени€ счетчика 
+		if (timeAfterShoot > delayBetweenShoots)
+		{
+			_shotPoint.Shoot(speed, distance);
+			timeAfterShoot = 0;
+		}
+	}
 }
+
 
