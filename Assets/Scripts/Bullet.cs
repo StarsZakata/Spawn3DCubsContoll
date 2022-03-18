@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-	[SerializeField] private float speed;
-	[SerializeField] private float distance;
+	public float speed;
+	public float distance;
 
-	private Transform spwanPoint;
+	private Vector3 positionShot;
 	private Vector3 moveDirection;
-	
+
+
 	private void Start()
 	{
-		spwanPoint = FindObjectOfType<Spawner>().transform;
+		positionShot = FindObjectOfType<ShotPoint>().transform.position;
 		moveDirection = Vector3.forward;
 	}
 
 	private void Update()
 	{
-		float dist = Vector3.Distance(spwanPoint.position, transform.position);
+		float dist = Vector3.Distance(positionShot, transform.position);
 		if (dist > distance) {
-			Debug.Log(dist);
 			Destroy(gameObject);
 		}
 		transform.Translate(moveDirection * speed * Time.deltaTime);
